@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pubmed Word Cloud Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Outfit:wght@400;700&display=swap"
+        rel="stylesheet">
+    <!-- D3.js and D3-cloud -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/jasondavies/d3-cloud/build/d3.layout.cloud.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Pubmed Word Cloud <span>Generator</span></h1>
+            <p class="subtitle">학술 데이터 기반 주제어 시각화 도구</p>
+        </header>
+
+        <main>
+            <section class="controls">
+                <div class="input-group">
+                    <label for="query">Search Query (Field)</label>
+                    <input type="text" id="query" placeholder="e.g. human biomonitoring AND PFAS"
+                        value="human biomonitoring">
+                    <span class="input-hint">Use AND, OR, NOT for complex queries.</span>
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="start-year">Start Year</label>
+                        <input type="number" id="start-year" value="2020" min="1900" max="2099">
+                    </div>
+                    <div class="input-group">
+                        <label for="end-year">End Year</label>
+                        <input type="number" id="end-year" value="2025" min="1900" max="2099">
+                    </div>
+                </div>
+                <button id="generate-btn">Generate Word Cloud</button>
+            </section>
+
+            <section class="visualization-area">
+                <div id="loader" class="hidden">
+                    <div class="spinner"></div>
+                    <p id="status-text">Fetching data from Pubmed...</p>
+                </div>
+                <div id="word-cloud-container"></div>
+            </section>
+
+            <section id="result-summary" class="hidden">
+                <div class="summary-card clickable" id="article-summary-card">
+                    <span class="label">Total Articles Found</span>
+                    <span id="article-count" class="value">0</span>
+                    <span class="hint">(Click to view list)</span>
+                </div>
+                <div class="summary-card">
+                    <span class="label">Top Words in Abstracts</span>
+                    <span id="keyword-count" class="value">0</span>
+                    <span class="hint">(Click words in cloud to filter)</span>
+                </div>
+            </section>
+
+            <!-- Article List Modal -->
+            <div id="article-modal" class="modal hidden">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 id="modal-title">Related Articles</h2>
+                        <button class="close-btn">&times;</button>
+                    </div>
+                    <div id="article-list" class="article-list"></div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 Environmental Health Science Lab. Powered by NCBI E-utils.</p>
+        </footer>
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>
